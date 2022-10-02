@@ -1,0 +1,144 @@
+<form *ngIf="(profile$ | async)" (ngSubmit)="saveProfile()" [formGroup]="profileForm">
+  <div fxLayout="column" fxLayoutGap="15%" fxLayoutGap.gt-xs="5%" class="w-100">
+  
+    <div fxLayout fxLayoutAlign="space-between" class="w-100">
+      <button type="submit" color="primary" mat-raised-button>Save</button>
+      <mat-slide-toggle color="primary" formControlName="public">Public</mat-slide-toggle>
+    </div>
+
+    <div fxLayout="column" fxLayout.gt-xs fxLayoutAlign="cente start" fxLayoutGap="5%">  
+      
+      <div class="w-100" fxFlex.gt-xs="50" fxLayout="column" fxLayoutAlign="center">
+        
+        <img  class="img-fluid rounded img-custom" [src]="(image$ | async)" alt="profile pic">
+
+        <input type="file" class="pt-2 file-input" (change)="onImageSelected($event)" #imageUpload>
+        <div fxLayout fxLayoutAlign="end end" class="file-upload pt-2">
+          <p class="no-wrap pe-2">{{imageName || "No image uploaded yet."}}</p>
+          <button type="button" mat-raised-button color="primary" class="upload-btn" (click)="imageUpload.click()">
+            <!-- <mat-icon>attach_file</mat-icon> -->Browse
+          </button>
+       </div>
+      </div>
+      <div fxLayout="column" class="w-100">
+        <div fxLayout.lt-md="column">
+          <div fxLayout="column" fxLayout.gt-xs fxLayoutAlign="space-between">
+
+            <mat-form-field appearance="outline">
+              <mat-label>First name</mat-label>
+              <input type="text" matInput formControlName="firstName" [value]="( profile$ | async)?.firstName">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Last name</mat-label>
+              <input type="text" matInput formControlName="lastName" [value]="( profile$ | async)?.lastName">
+            </mat-form-field>
+
+          </div>
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Email address</mat-label>
+            <input type="email" matInput formControlName="email" [value]="( profile$ | async)?.email">
+          </mat-form-field>
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Phone number</mat-label>
+            <input type="tel" matInput formControlName="phone" [value]="( profile$ | async)?.phone">
+          </mat-form-field>
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Occupations</mat-label>
+            <input type="text" matInput formControlName="occupations" [value]="( profile$ | async)?.occupations">
+            <mat-hint>Comma separated list (Web Designer,Project Manager,..) </mat-hint>
+          </mat-form-field>
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Motto</mat-label>
+            <input type="text" matInput formControlName="motto" [value]="( profile$ | async)?.motto">
+            <mat-hint>What makes you better?</mat-hint>
+          </mat-form-field>
+        </div>
+        <!-- <div *ngIf="(profile$ | async )?.socialMedia" class="pt-2" fxLayout fxLayoutAlign="start" fxLayoutGap="5%">
+          <div *ngFor="let item of (profile$ | async )?.socialMedia">
+            <a class="social-icon-button" [href]="item.url"><i [class]="'fab fa-2x fa-'+ item.name"></i></a>
+          </div>
+        </div> -->
+      </div>
+    </div>
+
+    <div fxLayout="column" class="w-100">
+      <p class="display-6">Social Icons:</p>
+      <mat-form-field appearance="outline" *ngFor="let item of ( profile$ | async)?.socialMedia">
+        <mat-label class="social-media-icon">{{ item.name }}</mat-label>
+        <input type="text" matInput formControlName="{{item.name}}" [value]="item.name">
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="column" class="w-100">
+      <p class="display-6">Address:</p>
+      <mat-form-field appearance="outline">
+        <mat-label>Street</mat-label>
+        <input type="text" matInput formControlName="street" [value]="( profile$ | async)?.address?.street">
+      </mat-form-field>
+      <div fxLayout="column" fxLayout.gt-xs fxLayoutGap="1%">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>City</mat-label>
+          <input type="text" matInput formControlName="city" [value]="( profile$ | async)?.address?.city">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Post Code</mat-label>
+          <input type="text" matInput formControlName="postCode" [value]="( profile$ | async)?.address?.postCode">
+        </mat-form-field>
+      </div>
+      <mat-form-field appearance="outline">
+        <mat-label>Country</mat-label>
+        <input type="text" matInput formControlName="country" [value]="( profile$ | async)?.address?.country">
+      </mat-form-field>
+    </div>
+    
+    
+    <div fxLayout="column" fxLayoutGap="1%">
+      <p class="display-6">Bio:</p>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Meet yourself</mat-label>
+        <textarea matInput #bio 
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="50"
+        maxlength="1000" formControlName="bio" placeholder="Lorem ipsum dolor sit amet....."></textarea>
+        <mat-hint align="end">{{bio.value.length || 0}}/1000</mat-hint>
+      </mat-form-field>
+    </div>
+
+    <div 
+      fxLayout="column" fxLayoutAlign="start"
+      fxLayout.gt-xs fxLayoutAlign.gt-xs="space-between">
+
+        <p class="display-6 mb-0">Documents:</p>
+        <input type="file" class="pt-2 file-input" (change)="onFileSelected($event)" #fileUpload>
+        <div fxLayout fxLayoutAlign="center center" class="file-upload pt-2">
+          <p class="m-0 pe-2">{{filename || "No file uploaded yet."}}</p>
+          <button type="button" mat-raised-button color="primary" class="upload-btn" (click)="fileUpload.click()">
+            <!-- <mat-icon>attach_file</mat-icon> -->Browse
+          </button>
+        </div>
+    </div>
+
+    <mat-chip-list 
+      *ngIf="(documents$ | async)" 
+      fxLayout="column" fxLayoutAlign="center center"
+      fxLayout.gt-xs="row wrap" 
+      fxLayoutGap="5%">
+    
+      <mat-chip [id]="item._id" *ngFor="let item of ( documents$ | async)" (removed)="deleteFile($event)">
+        <a class="" mat-link-button [href]="item?.metadata?.url">{{item.filename}}</a>
+        <button matChipRemove>
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip>
+    </mat-chip-list>
+    
+    <mat-divider></mat-divider>
+    <div fxLayout fxLayoutAlign="end">
+      <button type="submit" color="primary" mat-raised-button>Save</button>
+    </div>
+  </div>
+</form>
+
+

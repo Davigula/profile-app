@@ -1,0 +1,11 @@
+<div class="text-center" style="height: 80vh;">
+  <p class="display-3">This profile is private.</p>
+  <p class="display-5">Try again later</p>
+  <a 
+    *ngIf="(user$ | async)" 
+    mat-raised-button
+    color="primary"
+    class="mt-3 py-2"
+    [id]="(user$ | async)?.username" 
+    (click)="toEditProfile($event)">Edit Profile</a>
+</div>

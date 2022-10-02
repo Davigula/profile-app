@@ -1,0 +1,41 @@
+<div>
+
+  <p class="display-1 text-center mb-5">Find Your Professional</p>
+
+  <mat-divider class="pb-5"></mat-divider>
+
+  
+  <div fxLayout="column" fxLayoutGap="5%">
+    <div *ngFor="let profile of (profiles$ | async)">
+
+      <div fxLayout="column" fxLayout.gt-xs fxLayoutAlign.gt-xs="space-between" class="p-3 border rounded card mat-elevation-z12">
+        
+        <img fxFlex.gt-xs="30%" class="profile-image" [src]="profile.imageUrl" [alt]="profile.firstName+' '+profile.lastName">
+        
+        <div fxLayout="column" fxLayoutAlign="space-between">
+          <div fxLayout="column" fxLayoutAlign.gt-xs="start end" fxLayoutGap="3%">
+            <p class="display-4">{{ profile.firstName }} {{ profile.lastName }}</p>
+            <p class="lead">{{ profile.email }}</p>
+            <p *ngIf="profile.phone" class="mt-2 lead text-muted">{{ profile.phone }}</p>
+            <mat-divider></mat-divider>
+            <div class="w-100" fxLayout="row wrap" fxLayoutAlign.gt-xs="end" fxLayoutGap="1%">
+              <p *ngFor="let item of profile?.occupations; let isLast=last" class="lead text-muted text-wrap">{{item}}{{isLast ? '':', '}}</p>
+            </div>
+            <p *ngIf="profile.motto" class="lead text-muted">{{ profile.motto }} <small class="fs-6">(motto)</small></p>
+            <div *ngIf="profile.socialMedia" class="pt-2" fxLayout fxLayoutAlign="start">
+              <div *ngFor="let item of profile?.socialMedia">
+                <a *ngIf="item.url" class="text-black pe-4" [href]="item.url"><i [class]="'fab fa-2x fa-'+ item.name"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="m-3" fxLayout fxLayoutAlign.gt-xs="end">
+            <a mat-raised-button color="primary" [routerLink]="['/profile',profile.username]">Visit profile</a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

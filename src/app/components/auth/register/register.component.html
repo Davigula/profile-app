@@ -1,0 +1,47 @@
+<div class="full-height pt-5" fxLayout="column" fxLayoutAlign="start center">
+  <p class="display-3">Register</p>
+  <p class="lead text-muted">Create your online CV</p>
+  <div *ngIf="this.error" class="alert alert-danger mb-4" role="alert">
+    {{ this.error }}
+  </div>
+  <form (ngSubmit)="register()" [formGroup]="registerForm">
+    <div fxLayout="column">
+      <div fxLayout.gt-sm fxLayoutAlign="center space-between" fxLayout="column" >
+        <mat-form-field appearance="outline">
+          <mat-label>First name</mat-label>
+          <input matInput formControlName="firstName">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Last name</mat-label>
+          <input matInput formControlName="lastName">
+        </mat-form-field>
+      </div>
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Enter your password</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" [placeholder]="'Password'" formControlName="password">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Confirm password</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" [placeholder]="'Password'" formControlName="confirmPassword">
+      </mat-form-field>
+      
+      <div fxLayoue fxLayoutAlign="space-between end">
+        <div class="ml-1" fxLayout="column">
+          <mat-checkbox color="primary" formControlName="rememberMe">Remember me</mat-checkbox>
+          <a class="mt-1" routerLink="/login">Login instead</a>
+        </div>
+
+        <button mat-flat-button color="primary" type="submit" type="submit">
+          Register
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

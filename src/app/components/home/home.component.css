@@ -1,0 +1,10 @@
+
+@media only screen and (max-width: 600px) {
+  .card {
+   max-height: auto; 
+  }
+}
+
+.profile-image {
+  object-fit: cover;
+}

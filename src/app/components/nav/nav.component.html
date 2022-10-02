@@ -1,0 +1,39 @@
+<mat-toolbar class="bg-light mat-elevation-z8 mb-5">
+  <!-- Menu button -->
+  <button fxHide.gt-xs mat-icon-button (click)="toggleSidenav()">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <div fxHide.lt-sm fxLayoutAlign="start center" fxLayoutGap="1%">
+    <a class="navbar-brand" routerLink="/home"><mat-icon>face</mat-icon>ProfileApp</a>
+    
+    <div *ngIf="(price$ | async)" class="ms-4">
+      <small>BTCUSD: </small>
+      <small [ngStyle]="{'color': greater ? 'green' : 'red' }">
+        {{ (price$ | async) | currency: 'USD' }}
+      </small>
+    </div>
+
+  </div>
+  <span class="example-spacer"></span>
+  
+  <div fxHide.lt-sm>
+    <div *ngIf="!(user$ | async)">
+      <a mat-button routerLink="/login">Login</a>
+    </div>
+  </div>
+  
+  <div *ngIf="(user$ | async)">
+    <div fxLayout>
+      <button class="me-md-2 icon-display" mat-icon-button  [matMenuTriggerFor]="menu" >
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button [id]="(user$ | async)?.username" mat-menu-item (click)="userProfile($event)">Profile</button>
+        <button [id]="(user$ | async)?.username" mat-menu-item (click)="userProfileEdit($event)">Edit Profile</button>
+        <button mat-menu-item (click)="logout()">Logout</button>
+      </mat-menu>
+    </div>
+  </div>
+</mat-toolbar>
+

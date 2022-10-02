@@ -1,0 +1,26 @@
+.main {
+  height: 100%;
+  width: 70%;
+  padding-bottom: 150px;
+}
+
+@media only screen and (max-width: 990px) {
+  .main {
+    /* height: 100vh; */
+    width: 100%;
+    padding-bottom: 150px;
+  }
+}
+
+.sidenav {
+  width: 100vh;
+}
+
+.sidenav-content-bg {
+  background: linear-gradient(#fafafa, #121735);
+}
+
+
+.footer {
+  background-color: #121735;
+}

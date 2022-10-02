@@ -1,0 +1,18 @@
+.social-icon-button {
+  color: black;
+}
+
+.file-input {
+  display: none;
+}
+
+.img-custom {
+  /* max-height: 500px; */
+  object-fit: cover;
+}
+
+
+.social-media-icon {
+  text-transform: capitalize;
+}
+

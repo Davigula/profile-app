@@ -1,0 +1,14 @@
+.rounded-avatar-image {
+  border-radius: 50%;
+  background-color: cadetblue;
+  width: 250px;
+  height: 250px;
+}
+
+.social-icon-button {
+  color: black;
+}
+
+.bio-spacing {
+  line-height: 1.2;
+}

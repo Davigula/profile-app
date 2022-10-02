@@ -1,0 +1,42 @@
+ <div style="height: 100vh; background-color: #fafafa;">
+  <!-- Navbar -->
+ <app-nav (sidenavToggled)="sidenavOpened=!sidenavOpened"></app-nav>
+
+ <!-- Sidenav container -->
+ <mat-sidenav-container [hasBackdrop]="false">
+ 
+   <!-- Sidenav -->
+   <mat-sidenav  mode="side" [opened]="sidenavOpened">
+     
+     <mat-nav-list class="sidenav">
+       <a mat-list-item routerLink="/home" (click)="sidenavOpened=!sidenavOpened">Home</a>
+        <div *ngIf="!(user$ | async)">
+          <a mat-list-item routerLink="/register" (click)="sidenavOpened=!sidenavOpened">Register</a>
+          <a mat-list-item routerLink="/login" (click)="sidenavOpened=!sidenavOpened">Login</a>
+        </div>
+        <div *ngIf="(user$ | async)">
+         <a [id]="(user$ | async)?.username" mat-list-item (click)="toProfile($event)" (click)="sidenavOpened=!sidenavOpened">Profile</a> 
+         <a [id]="(user$ | async)?.username" mat-list-item (click)="toEditProfile($event)" (click)="sidenavOpened=!sidenavOpened">Edit Profile</a>
+         <a mat-list-item routerLink="/logout" (click)="logout()" (click)="sidenavOpened=!sidenavOpened">Logout</a>
+       </div>
+     </mat-nav-list>
+   </mat-sidenav>
+
+   <!-- Content -->
+   <mat-sidenav-content class="sidenav-content-bg ">
+    <div class="container-md bg-light">
+      <div fxLayout fxLayoutAlign="center center">
+        <div class="main" fxLayout="column">
+          <!-- <span class="mt-5"></span> -->
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+  </mat-sidenav-content>
+  
+</mat-sidenav-container>
+
+  <div fxLayout="column" class="footer py-5 w-100">
+    <p class="lead text-white text-center">Copyright © {{ currentYear }} ProfileApp, Inc</p>
+  </div>
+ </div>

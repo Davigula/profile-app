@@ -1,0 +1,64 @@
+<div *ngIf="(profile$ | async)" fxLayout="column" fxLayoutGap="15%" fxLayoutGap.gt-xs="5%" class="w-100">
+  
+  <div fxLayout="column" fxLayout.gt-xs fxLayoutAlign="cente start" fxLayoutGap="5%">  
+    <div fxFlex.gt-xs="50" fxLayout="column">
+      <img class="img-fluid rounded" [src]="(profile$ | async)?.imageUrl" alt="profile pic">
+    </div>
+    <div fxLayout="column" fxLayoutGap="5%">
+      <div>
+        <p class="display-3 mb-4">{{ (profile$ | async )?.firstName }} {{ (profile$ | async )?.lastName }}</p>
+        <p class="lead text-muted">{{ (profile$ | async )?.email }} (email)</p>
+        <p *ngIf="(profile$ | async )?.phone" class="lead text-muted">{{ (profile$ | async )?.phone }} (phone)</p>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="pt-2">
+        <div *ngIf="(profile$ | async )?.occupations" 
+          fxLayout.gt-sm fxLayout="column" fxLayoutGap="4%">
+          <p *ngFor="let item of (profile$ | async )?.occupations; let isLast=last" class="lead text-muted">{{item}}{{isLast ? '':', '}}</p>
+        </div>
+        <p *ngIf="(profile$ | async )?.motto" class="lead text-muted">{{ (profile$ | async )?.motto }} (motto)</p>
+      </div>
+      <mat-divider *ngIf="(profile$ | async )?.address?.street"></mat-divider>
+      <div class="pt-2" fxLayout="column" *ngIf="(profile$ | async )?.address?.street">
+        <p class="lead text-muted">{{ (profile$ | async )?.address?.street }} (street)</p>
+        <p class="lead text-muted">{{ (profile$ | async )?.address?.city }}, {{ (profile$ | async )?.address?.postCode }} (street, post code)</p>
+        <p class="lead text-muted">{{ (profile$ | async )?.address?.country }} (country)</p>
+      </div>
+      <mat-divider></mat-divider>
+      <div *ngIf="(profile$ | async )?.socialMedia" class="pt-2" fxLayout fxLayoutAlign="start">
+        <div *ngFor="let item of (profile$ | async )?.socialMedia">
+          <a *ngIf="item.url" class="social-icon-button pe-4" [href]="item.url"><i [class]="'fab fa-2x fa-'+ item.name"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="(profile$ | async )?.bio" fxLayout="column" fxLayoutGap="1%">
+    <p class="display-5">Bio:</p>
+    <mat-divider fxFlex></mat-divider>
+    <p class="pt-3 lead bio-spacing">{{ (profile$ | async )?.bio }}</p>
+  </div>
+
+  <div fxLayout="column" fxLayoutAlign="start" fxLayoutGap="1%">
+
+      <p class="display-6">Documents:</p>
+      <mat-divider></mat-divider>
+      <p *ngIf="(profile$ | async)?.documents == []"  class="display-3">
+        {{ (profile$ | async )?.firstName }} {{ (profile$ | async )?.lastName }}
+        has no a documents yet... 
+      </p>
+
+      <mat-chip-list 
+        class="pt-3"
+        *ngIf="(profile$ | async)?.documents != []" 
+        fxLayout="column"
+        fxLayout.gt-xs="row wrap" 
+        fxLayoutGap="5%">
+      
+        <mat-chip *ngFor="let item of (profile$ | async)?.documents">
+          <a class="p-2" mat-link-button [href]="item?.metadata?.url">{{item.filename}}</a>
+        </mat-chip>
+      </mat-chip-list>
+  </div>
+
+</div>
